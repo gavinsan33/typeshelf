@@ -1,8 +1,8 @@
 "use strict";
 // Optional cloud sync via Supabase. Fill in both values to turn it on; blank = local-only site.
 // The publishable key is meant to be public: row level security (supabase/schema.sql) does the protecting.
-const SUPABASE_URL = "";
-const SUPABASE_KEY = ""; // publishable key (sb_publishable_...)
+const SUPABASE_URL = "https://uzmjptwtunjaqdkqxaie.supabase.co";
+const SUPABASE_KEY = "sb_publishable_vgIyj-RJ9Crcsp1LB6gxxQ_UJl3qbDw"; // publishable key (sb_publishable_...)
 
 const sync = (() => {
   const off = { pushState() {}, pushBook() {}, dropBook() {} };
