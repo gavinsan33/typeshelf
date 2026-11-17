@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><title>epub check</title>
+<!-- Check: python3 -m http.server, then
+     google-chrome --headless --virtual-time-budget=20000 --dump-dom "http://localhost:8000/tools/epub-test.html?f=/path/to/book.epub" -->
+<script src="../epub.js"></script>
+<pre id="out">running</pre>
+<script>
+(async () => {
+  const out = document.getElementById("out");
+  try {
+    const b = await parseEpub(await (await fetch(new URLSearchParams(location.search).get("f"))).arrayBuffer());
+    console.assert(b.title && b.chapters.length && b.chapters.every((c) => c.paras.length), "bad parse");
+    out.textContent = "PASS " + JSON.stringify({ title: b.title, author: b.author, chapters: b.chapters.length,
+      first: b.chapters.slice(0, 3).map((c) => [c.title, c.paras[0].slice(0, 60)]) });
+  } catch (e) { out.textContent = "FAIL " + e.message; }
+})();
+</script>
