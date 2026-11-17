@@ -4,4 +4,4 @@ Personal typing-practice site modeled on typelit.io: type through public-domain 
 
 - Add or change books in `tools/build_books.py`, then run `python3 tools/build_books.py` (downloads texts and covers from Project Gutenberg into `books/` and `covers/`).
 - Local preview: `python3 -m http.server`.
-- Custom tab: paste your own text; it stays in your browser.
+- Custom tab: upload EPUBs (DRM-free) or paste text. Books are stored in IndexedDB, progress in localStorage, both only in this browser.
