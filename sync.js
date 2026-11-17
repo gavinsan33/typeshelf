@@ -89,5 +89,17 @@ const sync = (() => {
     // defer: supabase-js warns against awaiting its own calls inside this callback
     if (user && user.id !== was) setTimeout(fullSync, 0);
   });
+  // A failed email link (expired, already used, or opened in a different browser) otherwise fails silently.
+  sb.auth.initialize().then(async ({ error }) => {
+    // supabase-js silently skips a ?code= link when this browser never requested it
+    const strayCode = new URLSearchParams(location.search).has("code") && !(await sb.auth.getSession()).data.session;
+    if (!error && !strayCode) return;
+    const why = strayCode || error.code === "pkce_code_verifier_not_found"
+      ? "That link was opened in a different browser from the one that requested it. Request a new link here and open it in this browser."
+      : `Sign-in failed: ${error.message}. Request a new link.`;
+    history.replaceState(null, "", location.pathname + location.hash); // drop ?code / ?error
+    $dlg.querySelector("p").textContent = why;
+    $dlg.showModal();
+  });
   return { pushState, pushBook, dropBook };
 })();
