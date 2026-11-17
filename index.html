@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Typeshelf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>try { document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark"; } catch {}</script>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="#/">Typeshelf</a>
+  <nav id="crumbs" aria-label="breadcrumb"></nav>
+  <div id="stats" class="stats"></div>
+  <button id="theme" class="icon" aria-label="Toggle dark mode" title="Toggle dark mode"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+</header>
+<main id="app"></main>
+<script src="app.js"></script>
+</body>
+</html>
