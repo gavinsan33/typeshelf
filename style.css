@@ -62,9 +62,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .text { font: 600 17px/1.62 Literata, Georgia, serif; color: var(--todo); white-space: pre-wrap; word-wrap: break-word; }
 .text p { margin: 0 0 1.6em; }
 .text .ok { color: var(--ok); }
-.text .bad { color: var(--bad); }
+.text .bad { color: var(--bad); background: color-mix(in srgb, var(--bad) 18%, transparent); border-radius: 2px; }
 .text .bad.space { text-decoration: underline; }
-.cur { background: var(--cursor); color: #111; border-radius: 2px; }
+.cur { box-shadow: -2px 0 0 var(--cursor); }
 .hint { color: var(--muted); font-size: 14px; text-align: center; margin: 12px 0; }
 .next { display: block; margin: 0 auto; padding: 10px 24px; background: var(--panel2); border: 1px solid var(--line); font-weight: 700; }
 .done-card { text-align: center; background: var(--panel); padding: 24px; margin-top: 16px; }
