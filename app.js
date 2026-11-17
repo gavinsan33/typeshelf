@@ -21,8 +21,8 @@ async function tx(mode, fn) {
   return new Promise((ok, fail) => { t.oncomplete = () => ok(req?.result); t.onerror = () => fail(t.error); });
 }
 const customBooks = () => tx("readonly", (s) => s.getAll());
-const saveBook = (b) => { navigator.storage?.persist?.(); return tx("readwrite", (s) => s.put(b)); };
-const deleteBook = (id) => tx("readwrite", (s) => s.delete(id));
+const saveBook = async (b) => { navigator.storage?.persist?.(); await tx("readwrite", (s) => s.put(b)); sync.pushBook(b); };
+const deleteBook = async (id) => { await tx("readwrite", (s) => s.delete(id)); sync.dropBook(id); };
 (async () => { // one-time move of books saved by the earlier localStorage version
   const old = store.get("custom", null);
   if (old) { for (const b of old) await saveBook(b); localStorage.removeItem("custom"); }
@@ -229,7 +229,7 @@ async function renderConsole(id, ch, pg) {
   function finish() {
     finished = true; tick();
     const wpm = parseInt(document.getElementById("wpm").textContent), acc = parseInt(document.getElementById("acc").textContent);
-    const p = progress(); (p[id] ||= {})[`${ch}/${pg}`] = { wpm, acc }; store.set("progress", p);
+    const p = progress(); (p[id] ||= {})[`${ch}/${pg}`] = { wpm, acc }; store.set("progress", p); sync.pushState();
     const nextHash = pg + 1 < chapter.pages.length ? `#/type/${encodeURIComponent(id)}/${ch}/${pg + 1}`
       : ch + 1 < book.chapters.length ? `#/type/${encodeURIComponent(id)}/${ch + 1}/0` : `#/book/${encodeURIComponent(id)}`;
     document.getElementById("after").innerHTML = `<div class="done-card"><b>${wpm} WPM · ${acc}% ACC</b>

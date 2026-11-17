@@ -14,10 +14,21 @@
   <a class="brand" href="#/">Typeshelf</a>
   <nav id="crumbs" aria-label="breadcrumb"></nav>
   <div id="stats" class="stats"></div>
+  <button id="account" class="account" hidden>Sign in</button>
   <button id="theme" class="icon" aria-label="Toggle dark mode" title="Toggle dark mode"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
 </header>
 <main id="app"></main>
+<dialog id="signin">
+  <form method="dialog">
+    <h3>Sign in to sync</h3>
+    <p>We'll email you a sign-in link. Progress and uploaded books then sync across your devices.</p>
+    <input type="email" required placeholder="you@example.com" aria-label="Email">
+    <div class="row"><button class="add" value="send">Send link</button><button value="cancel" formnovalidate>Cancel</button></div>
+  </form>
+</dialog>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
 <script src="epub.js"></script>
+<script src="sync.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
