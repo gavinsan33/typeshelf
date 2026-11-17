@@ -4,13 +4,29 @@ const $crumbs = document.getElementById("crumbs");
 const $stats = document.getElementById("stats");
 const PAGE_CHARS = 1500;
 
-// ---------- storage (per-browser; everything lives in localStorage) ----------
+// ---------- storage (per-browser: progress in localStorage, custom books in IndexedDB) ----------
 const store = {
   get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
 };
 const progress = () => store.get("progress", {});          // {bookId: {"ch/p": {wpm, acc}}}
-const customBooks = () => store.get("custom", []);           // full book objects
+// custom books can be whole novels, too big for localStorage's ~5MB, so they live in IndexedDB
+const idb = new Promise((ok, fail) => {
+  const r = indexedDB.open("typeshelf", 1);
+  r.onupgradeneeded = () => r.result.createObjectStore("books", { keyPath: "id" });
+  r.onsuccess = () => ok(r.result); r.onerror = () => fail(r.error);
+});
+async function tx(mode, fn) {
+  const t = (await idb).transaction("books", mode), req = fn(t.objectStore("books"));
+  return new Promise((ok, fail) => { t.oncomplete = () => ok(req?.result); t.onerror = () => fail(t.error); });
+}
+const customBooks = () => tx("readonly", (s) => s.getAll());
+const saveBook = (b) => { navigator.storage?.persist?.(); return tx("readwrite", (s) => s.put(b)); };
+const deleteBook = (id) => tx("readwrite", (s) => s.delete(id));
+(async () => { // one-time move of books saved by the earlier localStorage version
+  const old = store.get("custom", null);
+  if (old) { for (const b of old) await saveBook(b); localStorage.removeItem("custom"); }
+})();
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
 // ---------- data ----------
@@ -20,7 +36,7 @@ async function classics() {
 }
 const bookCache = {};
 async function loadBook(id) {
-  if (id.startsWith("c-")) return customBooks().find((b) => b.id === id);
+  if (id.startsWith("c-")) return tx("readonly", (s) => s.get(id));
   return (bookCache[id] ??= await fetch(`books/${id}.json`).then((r) => r.json()));
 }
 function summary(book) { // custom books are stored whole; classics come pre-summarized in index.json
@@ -28,8 +44,8 @@ function summary(book) { // custom books are stored whole; classics come pre-sum
     ? { ...book, pages: book.chapters.reduce((n, c) => n + c.pages.length, 0), chapters: book.chapters.map((c) => ({ title: c.title, pages: c.pages.length })) }
     : book;
 }
-function paginate(text) {
-  const paras = text.split(/\n\s*\n/).map((p) => p.replace(/\s+/g, " ").trim()).filter(Boolean);
+const splitParas = (text) => text.split(/\n\s*\n/).map((p) => p.replace(/\s+/g, " ").trim()).filter(Boolean);
+function paginate(paras) {
   const pages = []; let cur = [], len = 0;
   for (const p of paras) {
     if (cur.length && len + p.length > PAGE_CHARS) { pages.push(cur); cur = []; len = 0; }
@@ -78,7 +94,7 @@ async function renderHome() {
   const tab = sessionStorage.getItem("tab") || "classics";
   $app.innerHTML = `<div class="wrap">
     <section class="hero">
-      <div class="pitch"><h2>Practice typing on great literature. Pick a classic below, or paste in your own text.</h2>
+      <div class="pitch"><h2>Practice typing on great literature. Pick a classic below, or upload your own EPUBs.</h2>
         <ul><li>Build typing speed and accuracy one page at a time</li>
         <li>Your progress, WPM and accuracy are saved in this browser</li>
         <li>Read a book while you practice</li></ul></div>
@@ -94,25 +110,39 @@ async function renderHome() {
   if (tab === "classics") {
     body.innerHTML = `<div class="grid">${(await classics()).map(card).join("")}</div>`;
   } else if (tab === "custom") {
-    const mine = customBooks();
-    body.innerHTML = `<form class="custom"><div class="row"><input name="title" placeholder="Title" required maxlength="120"></div>
+    const mine = await customBooks();
+    body.innerHTML = `<label class="upload">Upload EPUB files <input type="file" accept=".epub,application/epub+zip" multiple></label>
+      <p id="upmsg" class="empty" role="status"></p>
+      <form class="custom"><div class="row"><input name="title" placeholder="Title" required maxlength="120"></div>
       <textarea name="text" placeholder="Paste any text. Blank lines separate paragraphs; a line like 'Chapter 2' starts a new chapter." required></textarea>
       <button class="add">Add text</button></form>
       <div class="grid" style="margin-top:20px">${mine.map((b) => card(summary(b))).join("") || `<p class="empty">No custom texts yet.</p>`}</div>`;
-    body.querySelector("form").onsubmit = (e) => {
+    body.querySelector("input[type=file]").onchange = async (e) => {
+      const msg = document.getElementById("upmsg");
+      for (const file of e.target.files) {
+        msg.textContent = `Reading ${file.name}…`;
+        try {
+          const b = await parseEpub(await file.arrayBuffer());
+          await saveBook({ id: "c-" + Date.now() + Math.random().toString(36).slice(2, 6), title: b.title, author: b.author,
+            chapters: b.chapters.map((c) => ({ title: c.title, pages: paginate(c.paras) })) });
+        } catch (err) { msg.textContent = `${file.name}: ${err.message}`; return; }
+      }
+      renderHome();
+    };
+    body.querySelector("form").onsubmit = async (e) => {
       e.preventDefault();
       const f = new FormData(e.target);
       const parts = String(f.get("text")).split(/^\s*(chapter\s+\S+.*)$/im);
       const chapters = [];
-      if (parts[0].trim()) chapters.push({ title: "Part 1", pages: paginate(parts[0]) });
-      for (let i = 1; i < parts.length; i += 2) chapters.push({ title: parts[i].trim(), pages: paginate(parts[i + 1] || "") });
+      if (parts[0].trim()) chapters.push({ title: "Part 1", pages: paginate(splitParas(parts[0])) });
+      for (let i = 1; i < parts.length; i += 2) chapters.push({ title: parts[i].trim(), pages: paginate(splitParas(parts[i + 1] || "")) });
       const book = { id: "c-" + Date.now(), title: String(f.get("title")), author: "Custom", chapters: chapters.filter((c) => c.pages.length) };
       if (!book.chapters.length) return;
-      store.set("custom", [...mine, book]);
+      await saveBook(book);
       renderHome();
     };
   } else {
-    const all = [...(await classics()), ...customBooks().map(summary)];
+    const all = [...(await classics()), ...(await customBooks()).map(summary)];
     const recent = store.get("recent", []).map((id) => all.find((b) => b.id === id)).filter(Boolean);
     body.innerHTML = recent.length ? `<div class="grid">${recent.map(card).join("")}</div>` : `<p class="empty">Books you type in will show up here.</p>`;
   }
@@ -148,7 +178,7 @@ async function renderBook(id) {
       return `<a class="chapter ${n === c.pages ? "done" : ""}" href="#/type/${encodeURIComponent(id)}/${i}/${resume}"><span>${esc(c.title)}</span><small>${n ? `${n} / ` : ""}${c.pages} Pages</small></a>`;
     }).join("")}</div>`;
   const del = $app.querySelector(".del");
-  if (del) del.onclick = () => { if (confirm("Delete this text and its progress?")) { store.set("custom", customBooks().filter((x) => x.id !== id)); const p = progress(); delete p[id]; store.set("progress", p); location.hash = "#/"; } };
+  if (del) del.onclick = () => { if (confirm("Delete this text and its progress?")) { deleteBook(id); const p = progress(); delete p[id]; store.set("progress", p); location.hash = "#/"; } };
 }
 
 // ---------- typing console ----------
