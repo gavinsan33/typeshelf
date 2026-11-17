@@ -1,0 +1,1790 @@
+[
+ {
+  "id": "frankenstein",
+  "title": "Frankenstein",
+  "author": "Mary Shelley",
+  "chapters": [
+   {
+    "title": "Letter 1",
+    "pages": 5
+   },
+   {
+    "title": "Letter 2",
+    "pages": 7
+   },
+   {
+    "title": "Letter 3",
+    "pages": 1
+   },
+   {
+    "title": "Letter 4",
+    "pages": 12
+   },
+   {
+    "title": "Chapter 1",
+    "pages": 10
+   },
+   {
+    "title": "Chapter 2",
+    "pages": 11
+   },
+   {
+    "title": "Chapter 3",
+    "pages": 13
+   },
+   {
+    "title": "Chapter 4",
+    "pages": 11
+   },
+   {
+    "title": "Chapter 5",
+    "pages": 11
+   },
+   {
+    "title": "Chapter 6",
+    "pages": 13
+   },
+   {
+    "title": "Chapter 7",
+    "pages": 17
+   },
+   {
+    "title": "Chapter 8",
+    "pages": 15
+   },
+   {
+    "title": "Chapter 9",
+    "pages": 11
+   },
+   {
+    "title": "Chapter 10",
+    "pages": 11
+   },
+   {
+    "title": "Chapter 11",
+    "pages": 14
+   },
+   {
+    "title": "Chapter 12",
+    "pages": 11
+   },
+   {
+    "title": "Chapter 13",
+    "pages": 11
+   },
+   {
+    "title": "Chapter 14",
+    "pages": 8
+   },
+   {
+    "title": "Chapter 15",
+    "pages": 15
+   },
+   {
+    "title": "Chapter 16",
+    "pages": 15
+   },
+   {
+    "title": "Chapter 17",
+    "pages": 9
+   },
+   {
+    "title": "Chapter 18",
+    "pages": 13
+   },
+   {
+    "title": "Chapter 19",
+    "pages": 12
+   },
+   {
+    "title": "Chapter 20",
+    "pages": 15
+   },
+   {
+    "title": "Chapter 21",
+    "pages": 18
+   },
+   {
+    "title": "Chapter 22",
+    "pages": 16
+   },
+   {
+    "title": "Chapter 23",
+    "pages": 12
+   },
+   {
+    "title": "Chapter 24",
+    "pages": 40
+   }
+  ],
+  "pages": 357
+ },
+ {
+  "id": "pride-and-prejudice",
+  "title": "Pride and Prejudice",
+  "author": "Jane Austen",
+  "chapters": [
+   {
+    "title": "Chapter I.]",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER II",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER III",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER IV",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER V",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER VI",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER VII",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER VIII",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER IX",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER X",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER XI",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER XII",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER XIII",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER XIV",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER XV",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER XVI",
+    "pages": 15
+   },
+   {
+    "title": "CHAPTER XVII",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER XVIII",
+    "pages": 23
+   },
+   {
+    "title": "CHAPTER XIX",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER XX",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER XXI",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER XXII",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER XXIII",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER XXIV",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER XXV",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER XXVI",
+    "pages": 11
+   },
+   {
+    "title": "CHAPTER XXVII",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER XXVIII",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER XXIX",
+    "pages": 12
+   },
+   {
+    "title": "CHAPTER XXX",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER XXXI",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER XXXII",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER XXXIII",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER XXXIV",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER XXXV",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER XXXVI",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER XXXVII",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER XXXVIII",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER XXXIX",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER XL",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER XLI",
+    "pages": 11
+   },
+   {
+    "title": "CHAPTER XLII",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER XLIII",
+    "pages": 20
+   },
+   {
+    "title": "CHAPTER XLIV",
+    "pages": 12
+   },
+   {
+    "title": "CHAPTER XLV",
+    "pages": 9
+   },
+   {
+    "title": "Chapter XLVI",
+    "pages": 13
+   },
+   {
+    "title": "CHAPTER XLVII",
+    "pages": 18
+   },
+   {
+    "title": "CHAPTER XLVIII",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER XLIX",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER L",
+    "pages": 11
+   },
+   {
+    "title": "CHAPTER LI",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER LII",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER LIII",
+    "pages": 13
+   },
+   {
+    "title": "CHAPTER LIV",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER LV",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER LVI",
+    "pages": 12
+   },
+   {
+    "title": "CHAPTER LVII",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER LVIII",
+    "pages": 11
+   },
+   {
+    "title": "CHAPTER LIX",
+    "pages": 11
+   },
+   {
+    "title": "CHAPTER LX",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER LXI",
+    "pages": 6
+   }
+  ],
+  "pages": 544
+ },
+ {
+  "id": "alice-in-wonderland",
+  "title": "Alice in Wonderland",
+  "author": "Lewis Carroll",
+  "chapters": [
+   {
+    "title": "CHAPTER I",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER II",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER III",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER IV",
+    "pages": 12
+   },
+   {
+    "title": "CHAPTER V",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER VI",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER VII",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER VIII",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER IX",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER X",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER XI",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER XII",
+    "pages": 9
+   }
+  ],
+  "pages": 112
+ },
+ {
+  "id": "dracula",
+  "title": "Dracula",
+  "author": "Bram Stoker",
+  "chapters": [
+   {
+    "title": "CHAPTER I",
+    "pages": 25
+   },
+   {
+    "title": "CHAPTER II",
+    "pages": 25
+   },
+   {
+    "title": "CHAPTER III",
+    "pages": 22
+   },
+   {
+    "title": "CHAPTER IV",
+    "pages": 24
+   },
+   {
+    "title": "CHAPTER V",
+    "pages": 15
+   },
+   {
+    "title": "CHAPTER VI",
+    "pages": 21
+   },
+   {
+    "title": "ill. Lucy frets at the postponement of seeing him, but it does not touch",
+    "pages": 1
+   },
+   {
+    "title": "letter. I must only pray to God for patience. Lucy is more excitable",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER VII",
+    "pages": 23
+   },
+   {
+    "title": "CHAPTER VIII",
+    "pages": 25
+   },
+   {
+    "title": "CHAPTER IX",
+    "pages": 26
+   },
+   {
+    "title": "CHAPTER X",
+    "pages": 27
+   },
+   {
+    "title": "CHAPTER XI",
+    "pages": 23
+   },
+   {
+    "title": "CHAPTER XII",
+    "pages": 30
+   },
+   {
+    "title": "CHAPTER XIII",
+    "pages": 26
+   },
+   {
+    "title": "CHAPTER XIV",
+    "pages": 28
+   },
+   {
+    "title": "CHAPTER XV",
+    "pages": 24
+   },
+   {
+    "title": "CHAPTER XVI",
+    "pages": 18
+   },
+   {
+    "title": "CHAPTER XVII",
+    "pages": 22
+   },
+   {
+    "title": "CHAPTER XVIII",
+    "pages": 26
+   },
+   {
+    "title": "CHAPTER XIX",
+    "pages": 25
+   },
+   {
+    "title": "CHAPTER XX",
+    "pages": 25
+   },
+   {
+    "title": "CHAPTER XXI",
+    "pages": 25
+   },
+   {
+    "title": "CHAPTER XXII",
+    "pages": 21
+   },
+   {
+    "title": "CHAPTER XXIII",
+    "pages": 25
+   },
+   {
+    "title": "CHAPTER XXIV",
+    "pages": 27
+   },
+   {
+    "title": "CHAPTER XXV",
+    "pages": 29
+   },
+   {
+    "title": "CHAPTER XXVI",
+    "pages": 30
+   },
+   {
+    "title": "CHAPTER XXVII",
+    "pages": 37
+   }
+  ],
+  "pages": 678
+ },
+ {
+  "id": "sherlock-holmes",
+  "title": "The Adventures of Sherlock Holmes",
+  "author": "Arthur Conan Doyle",
+  "chapters": [
+   {
+    "title": "I. A SCANDAL IN BOHEMIA",
+    "pages": 35
+   },
+   {
+    "title": "II. THE RED-HEADED LEAGUE",
+    "pages": 40
+   },
+   {
+    "title": "III. A CASE OF IDENTITY",
+    "pages": 29
+   },
+   {
+    "title": "IV. THE BOSCOMBE VALLEY MYSTERY",
+    "pages": 39
+   },
+   {
+    "title": "V. THE FIVE ORANGE PIPS",
+    "pages": 33
+   },
+   {
+    "title": "VI. THE MAN WITH THE TWISTED LIP",
+    "pages": 42
+   },
+   {
+    "title": "VII. THE ADVENTURE OF THE BLUE CARBUNCLE",
+    "pages": 32
+   },
+   {
+    "title": "VIII. THE ADVENTURE OF THE SPECKLED BAND",
+    "pages": 43
+   },
+   {
+    "title": "IX. THE ADVENTURE OF THE ENGINEER’S THUMB",
+    "pages": 36
+   },
+   {
+    "title": "X. THE ADVENTURE OF THE NOBLE BACHELOR",
+    "pages": 34
+   },
+   {
+    "title": "XI. THE ADVENTURE OF THE BERYL CORONET",
+    "pages": 40
+   },
+   {
+    "title": "XII. THE ADVENTURE OF THE COPPER BEECHES",
+    "pages": 43
+   }
+  ],
+  "pages": 446
+ },
+ {
+  "id": "metamorphosis",
+  "title": "Metamorphosis",
+  "author": "Franz Kafka",
+  "chapters": [
+   {
+    "title": "Part 1",
+    "pages": 34
+   },
+   {
+    "title": "Part 2",
+    "pages": 34
+   },
+   {
+    "title": "Part 3",
+    "pages": 12
+   }
+  ],
+  "pages": 80
+ },
+ {
+  "id": "the-great-gatsby",
+  "title": "The Great Gatsby",
+  "author": "F. Scott Fitzgerald",
+  "chapters": [
+   {
+    "title": "I",
+    "pages": 26
+   },
+   {
+    "title": "II",
+    "pages": 18
+   },
+   {
+    "title": "III",
+    "pages": 25
+   },
+   {
+    "title": "IV",
+    "pages": 22
+   },
+   {
+    "title": "V",
+    "pages": 17
+   },
+   {
+    "title": "VI",
+    "pages": 18
+   },
+   {
+    "title": "VII",
+    "pages": 36
+   },
+   {
+    "title": "VIII",
+    "pages": 20
+   },
+   {
+    "title": "IX",
+    "pages": 22
+   }
+  ],
+  "pages": 204
+ },
+ {
+  "id": "jekyll-and-hyde",
+  "title": "Dr. Jekyll and Mr. Hyde",
+  "author": "Robert Louis Stevenson",
+  "chapters": [
+   {
+    "title": "Part 1",
+    "pages": 9
+   },
+   {
+    "title": "Part 2",
+    "pages": 9
+   },
+   {
+    "title": "Part 3",
+    "pages": 10
+   },
+   {
+    "title": "Part 4",
+    "pages": 10
+   },
+   {
+    "title": "Part 5",
+    "pages": 10
+   },
+   {
+    "title": "Part 6",
+    "pages": 8
+   },
+   {
+    "title": "Part 7",
+    "pages": 9
+   },
+   {
+    "title": "Part 8",
+    "pages": 12
+   },
+   {
+    "title": "Part 9",
+    "pages": 28
+   },
+   {
+    "title": "Part 10",
+    "pages": 2
+   }
+  ],
+  "pages": 107
+ },
+ {
+  "id": "a-christmas-carol",
+  "title": "A Christmas Carol",
+  "author": "Charles Dickens",
+  "chapters": [
+   {
+    "title": "STAVE I:  MARLEY'S GHOST",
+    "pages": 28
+   },
+   {
+    "title": "STAVE II:  THE FIRST OF THE THREE SPIRITS",
+    "pages": 27
+   },
+   {
+    "title": "STAVE III:  THE SECOND OF THE THREE SPIRITS",
+    "pages": 36
+   },
+   {
+    "title": "STAVE IV:  THE LAST OF THE SPIRITS",
+    "pages": 23
+   },
+   {
+    "title": "STAVE V:  THE END OF IT",
+    "pages": 9
+   }
+  ],
+  "pages": 123
+ },
+ {
+  "id": "call-of-the-wild",
+  "title": "The Call of the Wild",
+  "author": "Jack London",
+  "chapters": [
+   {
+    "title": "Chapter I. Into the Primitive",
+    "pages": 19
+   },
+   {
+    "title": "Chapter II. The Law of Club and Fang",
+    "pages": 15
+   },
+   {
+    "title": "Chapter III. The Dominant Primordial Beast",
+    "pages": 27
+   },
+   {
+    "title": "Chapter IV. Who Has Won to Mastership",
+    "pages": 15
+   },
+   {
+    "title": "Chapter V. The Toil of Trace and Trail",
+    "pages": 26
+   },
+   {
+    "title": "Chapter VI. For the Love of a Man",
+    "pages": 21
+   },
+   {
+    "title": "Chapter VII. The Sounding of the Call",
+    "pages": 31
+   }
+  ],
+  "pages": 154
+ },
+ {
+  "id": "dorian-gray",
+  "title": "The Picture of Dorian Gray",
+  "author": "Oscar Wilde",
+  "chapters": [
+   {
+    "title": "CHAPTER I",
+    "pages": 22
+   },
+   {
+    "title": "CHAPTER II",
+    "pages": 24
+   },
+   {
+    "title": "CHAPTER III",
+    "pages": 19
+   },
+   {
+    "title": "CHAPTER IV",
+    "pages": 22
+   },
+   {
+    "title": "CHAPTER V",
+    "pages": 18
+   },
+   {
+    "title": "CHAPTER VI",
+    "pages": 12
+   },
+   {
+    "title": "CHAPTER VII",
+    "pages": 22
+   },
+   {
+    "title": "CHAPTER VIII",
+    "pages": 23
+   },
+   {
+    "title": "CHAPTER IX",
+    "pages": 14
+   },
+   {
+    "title": "CHAPTER X",
+    "pages": 15
+   },
+   {
+    "title": "CHAPTER XI",
+    "pages": 31
+   },
+   {
+    "title": "CHAPTER XII",
+    "pages": 11
+   },
+   {
+    "title": "CHAPTER XIII",
+    "pages": 11
+   },
+   {
+    "title": "CHAPTER XIV",
+    "pages": 18
+   },
+   {
+    "title": "CHAPTER XV",
+    "pages": 14
+   },
+   {
+    "title": "CHAPTER XVI",
+    "pages": 13
+   },
+   {
+    "title": "CHAPTER XVII",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER XVIII",
+    "pages": 14
+   },
+   {
+    "title": "CHAPTER XIX",
+    "pages": 16
+   },
+   {
+    "title": "CHAPTER XX",
+    "pages": 9
+   }
+  ],
+  "pages": 335
+ },
+ {
+  "id": "peter-pan",
+  "title": "Peter Pan",
+  "author": "J. M. Barrie",
+  "chapters": [
+   {
+    "title": "Chapter I",
+    "pages": 14
+   },
+   {
+    "title": "Chapter II",
+    "pages": 12
+   },
+   {
+    "title": "Chapter III",
+    "pages": 16
+   },
+   {
+    "title": "Chapter IV",
+    "pages": 12
+   },
+   {
+    "title": "Chapter V",
+    "pages": 15
+   },
+   {
+    "title": "Chapter VI",
+    "pages": 10
+   },
+   {
+    "title": "Chapter VII",
+    "pages": 11
+   },
+   {
+    "title": "Chapter VIII",
+    "pages": 15
+   },
+   {
+    "title": "Chapter IX",
+    "pages": 5
+   },
+   {
+    "title": "Chapter X",
+    "pages": 8
+   },
+   {
+    "title": "Chapter XI",
+    "pages": 10
+   },
+   {
+    "title": "Chapter XII",
+    "pages": 7
+   },
+   {
+    "title": "Chapter XIII",
+    "pages": 11
+   },
+   {
+    "title": "Chapter XIV",
+    "pages": 9
+   },
+   {
+    "title": "Chapter XV",
+    "pages": 13
+   },
+   {
+    "title": "Chapter XVI",
+    "pages": 12
+   },
+   {
+    "title": "Chapter XVII",
+    "pages": 13
+   }
+  ],
+  "pages": 193
+ },
+ {
+  "id": "the-art-of-war",
+  "title": "The Art of War",
+  "author": "Sun Tzu",
+  "chapters": [
+   {
+    "title": "Chapter I. LAYING PLANS",
+    "pages": 7
+   },
+   {
+    "title": "Chapter II. WAGING WAR",
+    "pages": 7
+   },
+   {
+    "title": "Chapter III. ATTACK BY STRATAGEM",
+    "pages": 10
+   },
+   {
+    "title": "Chapter IV. TACTICAL DISPOSITIONS",
+    "pages": 7
+   },
+   {
+    "title": "Chapter V. ENERGY",
+    "pages": 10
+   },
+   {
+    "title": "Chapter VI. WEAK POINTS AND STRONG",
+    "pages": 12
+   },
+   {
+    "title": "Chapter VII. MANŒUVERING",
+    "pages": 17
+   },
+   {
+    "title": "Chapter VIII. VARIATION OF TACTICS",
+    "pages": 11
+   },
+   {
+    "title": "Chapter IX. THE ARMY ON THE MARCH",
+    "pages": 18
+   },
+   {
+    "title": "Chapter X. TERRAIN",
+    "pages": 12
+   },
+   {
+    "title": "Chapter XI. THE NINE SITUATIONS",
+    "pages": 39
+   },
+   {
+    "title": "Chapter XII. THE ATTACK BY FIRE",
+    "pages": 10
+   },
+   {
+    "title": "Chapter XIII. THE USE OF SPIES",
+    "pages": 18
+   }
+  ],
+  "pages": 178
+ },
+ {
+  "id": "treasure-island",
+  "title": "Treasure Island",
+  "author": "Robert Louis Stevenson",
+  "chapters": [
+   {
+    "title": "I",
+    "pages": 10
+   },
+   {
+    "title": "II",
+    "pages": 10
+   },
+   {
+    "title": "III",
+    "pages": 9
+   },
+   {
+    "title": "IV",
+    "pages": 10
+   },
+   {
+    "title": "V",
+    "pages": 9
+   },
+   {
+    "title": "VI",
+    "pages": 8
+   },
+   {
+    "title": "VII",
+    "pages": 7
+   },
+   {
+    "title": "VIII",
+    "pages": 8
+   },
+   {
+    "title": "IX",
+    "pages": 7
+   },
+   {
+    "title": "X",
+    "pages": 8
+   },
+   {
+    "title": "XI",
+    "pages": 9
+   },
+   {
+    "title": "XII",
+    "pages": 8
+   },
+   {
+    "title": "XIII",
+    "pages": 7
+   },
+   {
+    "title": "XIV",
+    "pages": 8
+   },
+   {
+    "title": "XV",
+    "pages": 9
+   },
+   {
+    "title": "XVI",
+    "pages": 7
+   },
+   {
+    "title": "XVIII",
+    "pages": 7
+   },
+   {
+    "title": "XIX",
+    "pages": 9
+   },
+   {
+    "title": "XX",
+    "pages": 8
+   },
+   {
+    "title": "XXI",
+    "pages": 9
+   },
+   {
+    "title": "XXII",
+    "pages": 9
+   },
+   {
+    "title": "XXIII",
+    "pages": 7
+   },
+   {
+    "title": "XXIV",
+    "pages": 8
+   },
+   {
+    "title": "XXV",
+    "pages": 7
+   },
+   {
+    "title": "XXVI",
+    "pages": 12
+   },
+   {
+    "title": "XXVII",
+    "pages": 9
+   },
+   {
+    "title": "XXVIII",
+    "pages": 12
+   },
+   {
+    "title": "XXIX",
+    "pages": 9
+   },
+   {
+    "title": "XXX",
+    "pages": 10
+   },
+   {
+    "title": "XXXI",
+    "pages": 10
+   },
+   {
+    "title": "XXXII",
+    "pages": 9
+   },
+   {
+    "title": "XXXIII",
+    "pages": 9
+   },
+   {
+    "title": "XXXIV",
+    "pages": 8
+   }
+  ],
+  "pages": 286
+ },
+ {
+  "id": "moby-dick",
+  "title": "Moby-Dick",
+  "author": "Herman Melville",
+  "chapters": [
+   {
+    "title": "CHAPTER 1. Loomings",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER 2. The Carpet-Bag",
+    "pages": 5
+   },
+   {
+    "title": "I. But it is a common name in Nantucket, they say, and I suppose this",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER 3. The Spouter-Inn",
+    "pages": 26
+   },
+   {
+    "title": "CHAPTER 4. The Counterpane",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER 5. Breakfast",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 6. The Street",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 7. The Chapel",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 8. The Pulpit",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 9. The Sermon",
+    "pages": 16
+   },
+   {
+    "title": "CHAPTER 10. A Bosom Friend",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER 11. Nightgown",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 12. Biographical",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 13. Wheelbarrow",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER 14. Nantucket",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER 15. Chowder",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 16. The Ship",
+    "pages": 23
+   },
+   {
+    "title": "CHAPTER 17. The Ramadan",
+    "pages": 12
+   },
+   {
+    "title": "CHAPTER 18. His Mark",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 19. The Prophet",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 20. All Astir",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 21. Going Aboard",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 22. Merry Christmas",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER 23. The Lee Shore",
+    "pages": 2
+   },
+   {
+    "title": "CHAPTER 24. The Advocate",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER 25. Postscript",
+    "pages": 2
+   },
+   {
+    "title": "CHAPTER 26. Knights and Squires",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 27. Knights and Squires",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 28. Ahab",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 29. Enter Ahab; to Him, Stubb",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 30. The Pipe",
+    "pages": 2
+   },
+   {
+    "title": "CHAPTER 31. Queen Mab",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER 32. Cetology",
+    "pages": 8
+   },
+   {
+    "title": "BOOK I. (_Folio_), CHAPTER I. (_Sperm Whale_).—This whale, among the",
+    "pages": 1
+   },
+   {
+    "title": "BOOK I. (_Folio_), CHAPTER II. (_Right Whale_).—In one respect this is",
+    "pages": 2
+   },
+   {
+    "title": "BOOK I. (_Folio_), CHAPTER III. (_Fin-Back_).—Under this head I reckon",
+    "pages": 3
+   },
+   {
+    "title": "BOOK I. (_Folio_), CHAPTER VI. (_Sulphur Bottom_).—Another retiring",
+    "pages": 1
+   },
+   {
+    "title": "BOOK II. (_Octavo_), CHAPTER II. (_Black Fish_).—I give the popular",
+    "pages": 1
+   },
+   {
+    "title": "BOOK II. (_Octavo_), CHAPTER III. (_Narwhale_), that is, _Nostril",
+    "pages": 2
+   },
+   {
+    "title": "BOOK II. (_Octavo_), CHAPTER V. (_Thrasher_).—This gentleman is famous",
+    "pages": 1
+   },
+   {
+    "title": "BOOK III. (_Duodecimo_), CHAPTER 1. (_Huzza Porpoise_).—This is the",
+    "pages": 1
+   },
+   {
+    "title": "BOOK III. (_Duodecimo_), CHAPTER III. (_Mealy-mouthed Porpoise_).—The",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER 33. The Specksnyder",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 34. The Cabin-Table",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER 35. The Mast-Head",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER 36. The Quarter-Deck",
+    "pages": 13
+   },
+   {
+    "title": "CHAPTER 37. Sunset",
+    "pages": 2
+   },
+   {
+    "title": "CHAPTER 38. Dusk",
+    "pages": 2
+   },
+   {
+    "title": "CHAPTER 39. First Night-Watch",
+    "pages": 1
+   },
+   {
+    "title": "CHAPTER 40. Midnight, Forecastle",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER 41. Moby Dick",
+    "pages": 19
+   },
+   {
+    "title": "CHAPTER 42. The Whiteness of the Whale",
+    "pages": 17
+   },
+   {
+    "title": "CHAPTER 43. Hark!",
+    "pages": 2
+   },
+   {
+    "title": "CHAPTER 44. The Chart",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER 45. The Affidavit",
+    "pages": 18
+   },
+   {
+    "title": "CHAPTER 46. Surmises",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 47. The Mat-Maker",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 48. The First Lowering",
+    "pages": 18
+   },
+   {
+    "title": "CHAPTER 49. The Hyena",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 50. Ahab’s Boat and Crew. Fedallah",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 51. The Spirit-Spout",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER 52. The Albatross",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 53. The Gam",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER 54. The Town-Ho’s Story",
+    "pages": 37
+   },
+   {
+    "title": "CHAPTER 55. Of the Monstrous Pictures of Whales",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER 56. Of the Less Erroneous Pictures of Whales, and the True",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 57. Of Whales in Paint; in Teeth; in Wood; in Sheet-Iron; in",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 58. Brit",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 59. Squid",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 60. The Line",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER 61. Stubb Kills a Whale",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER 62. The Dart",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER 63. The Crotch",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER 64. Stubb’s Supper",
+    "pages": 14
+   },
+   {
+    "title": "CHAPTER 65. The Whale as a Dish",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 66. The Shark Massacre",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 67. Cutting In",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER 68. The Blanket",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 69. The Funeral",
+    "pages": 2
+   },
+   {
+    "title": "CHAPTER 70. The Sphynx",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 71. The Jeroboam’s Story",
+    "pages": 11
+   },
+   {
+    "title": "CHAPTER 72. The Monkey-Rope",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER 73. Stubb and Flask kill a Right Whale; and Then Have a Talk",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER 74. The Sperm Whale’s Head—Contrasted View",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER 75. The Right Whale’s Head—Contrasted View",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 76. The Battering-Ram",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 77. The Great Heidelburgh Tun",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER 78. Cistern and Buckets",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER 79. The Prairie",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 80. The Nut",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 81. The Pequod Meets The Virgin",
+    "pages": 20
+   },
+   {
+    "title": "CHAPTER 82. The Honor and Glory of Whaling",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 83. Jonah Historically Regarded",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 84. Pitchpoling",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 85. The Fountain",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER 86. The Tail",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER 87. The Grand Armada",
+    "pages": 24
+   },
+   {
+    "title": "CHAPTER 88. Schools and Schoolmasters",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 89. Fast-Fish and Loose-Fish",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER 90. Heads or Tails",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 91. The Pequod Meets The Rose-Bud",
+    "pages": 12
+   },
+   {
+    "title": "CHAPTER 92. Ambergris",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 93. The Castaway",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER 94. A Squeeze of the Hand",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 95. The Cassock",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER 96. The Try-Works",
+    "pages": 11
+   },
+   {
+    "title": "CHAPTER 97. The Lamp",
+    "pages": 1
+   },
+   {
+    "title": "CHAPTER 98. Stowing Down and Clearing Up",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 99. The Doubloon",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER 100. Leg and Arm",
+    "pages": 13
+   },
+   {
+    "title": "CHAPTER 101. The Decanter",
+    "pages": 8
+   },
+   {
+    "title": "CHAPTER 102. A Bower in the Arsacides",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER 103. Measurement of The Whale’s Skeleton",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 104. The Fossil Whale",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER 105. Does the Whale’s Magnitude Diminish?—Will He Perish?",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER 106. Ahab’s Leg",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 107. The Carpenter",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 108. Ahab and the Carpenter",
+    "pages": 7
+   },
+   {
+    "title": "CHAPTER 109. Ahab and Starbuck in the Cabin",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 110. Queequeg in His Coffin",
+    "pages": 10
+   },
+   {
+    "title": "CHAPTER 111. The Pacific",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER 112. The Blacksmith",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 113. The Forge",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 114. The Gilder",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 115. The Pequod Meets The Bachelor",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 116. The Dying Whale",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER 117. The Whale Watch",
+    "pages": 2
+   },
+   {
+    "title": "CHAPTER 118. The Quadrant",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 119. The Candles",
+    "pages": 12
+   },
+   {
+    "title": "CHAPTER 120. The Deck Towards the End of the First Night Watch",
+    "pages": 1
+   },
+   {
+    "title": "CHAPTER 121. Midnight.—The Forecastle Bulwarks",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER 123. The Musket",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 124. The Needle",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 125. The Log and Line",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 126. The Life-Buoy",
+    "pages": 5
+   },
+   {
+    "title": "CHAPTER 127. The Deck",
+    "pages": 4
+   },
+   {
+    "title": "CHAPTER 128. The Pequod Meets The Rachel",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 129. The Cabin",
+    "pages": 3
+   },
+   {
+    "title": "CHAPTER 130. The Hat",
+    "pages": 9
+   },
+   {
+    "title": "CHAPTER 131. The Pequod Meets The Delight",
+    "pages": 2
+   },
+   {
+    "title": "CHAPTER 132. The Symphony",
+    "pages": 6
+   },
+   {
+    "title": "CHAPTER 133. The Chase—First Day",
+    "pages": 17
+   },
+   {
+    "title": "CHAPTER 134. The Chase—Second Day",
+    "pages": 17
+   },
+   {
+    "title": "CHAPTER 135. The Chase.—Third Day",
+    "pages": 21
+   }
+  ],
+  "pages": 1000
+ },
+ {
+  "id": "meditations",
+  "title": "Meditations",
+  "author": "Marcus Aurelius",
+  "chapters": [
+   {
+    "title": "THE FIRST BOOK",
+    "pages": 13
+   },
+   {
+    "title": "THE SECOND BOOK",
+    "pages": 9
+   },
+   {
+    "title": "THE THIRD BOOK",
+    "pages": 12
+   },
+   {
+    "title": "THE FOURTH BOOK",
+    "pages": 22
+   },
+   {
+    "title": "THE FIFTH BOOK",
+    "pages": 22
+   },
+   {
+    "title": "THE SIXTH BOOK",
+    "pages": 24
+   },
+   {
+    "title": "THE SEVENTH BOOK",
+    "pages": 26
+   },
+   {
+    "title": "THE EIGHTH BOOK",
+    "pages": 27
+   },
+   {
+    "title": "THE NINTH BOOK",
+    "pages": 19
+   },
+   {
+    "title": "THE TENTH BOOK",
+    "pages": 24
+   },
+   {
+    "title": "THE ELEVENTH BOOK",
+    "pages": 17
+   },
+   {
+    "title": "THE TWELFTH BOOK",
+    "pages": 54
+   }
+  ],
+  "pages": 269
+ }
+]
