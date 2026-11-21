@@ -14,14 +14,31 @@ const sync = (() => {
   const say = (t) => { $btn.title = t; };
   const fail = (what, error) => { console.error(what, error); say(`Sync error: ${error.message}`); };
 
-  function merge(local, remote) { // union of finished pages; local wins on conflict
+  // Per book, the copy that is further ahead wins outright (furthest finished page, then most pages done; local on a tie).
+  const furthest = (pages) => Math.max(-1, ...Object.keys(pages).map((k) => { const [c, p] = k.split("/"); return c * 1e6 + +p; }));
+  function merge(local, remote) {
     const out = { ...remote };
-    for (const [book, pages] of Object.entries(local)) out[book] = { ...(remote[book] || {}), ...pages };
+    for (const [book, pages] of Object.entries(local)) {
+      const r = remote[book];
+      if (!r) { out[book] = pages; continue; }
+      const [lf, rf] = [furthest(pages), furthest(r)];
+      out[book] = lf > rf || (lf === rf && Object.keys(pages).length >= Object.keys(r).length) ? pages : r;
+    }
     return out;
   }
 
-  async function pushState() {
+  // Pull remote progress into local storage. Returns true if it changed anything.
+  async function pullState() {
+    const { data: st, error } = await sb.from("user_state").select("progress, recent").maybeSingle();
+    if (error) { fail("pull state", error); return false; }
+    const before = JSON.stringify([progress(), store.get("recent", [])]);
+    store.set("progress", merge(progress(), st?.progress || {}));
+    store.set("recent", [...new Set([...store.get("recent", []), ...(st?.recent || [])])].slice(0, 12));
+    return before !== JSON.stringify([progress(), store.get("recent", [])]);
+  }
+  async function pushState(pull = true) {
     if (!user) return;
+    if (pull) await pullState(); // merge first so a stale tab can't overwrite newer progress from another device
     const { error } = await sb.from("user_state").upsert({ user_id: user.id, progress: progress(), recent: store.get("recent", []), updated_at: new Date().toISOString() });
     if (error) fail("push state", error);
   }
@@ -36,7 +53,7 @@ const sync = (() => {
     if (!user) return;
     const { error } = await sb.from("user_books").delete().eq("id", id);
     if (error) fail("delete book", error);
-    pushState();
+    pushState(false); // don't merge remote progress back in for the book just deleted
   }
 
   async function fullSync() {
@@ -68,6 +85,16 @@ const sync = (() => {
     say(`Signed in as ${user.email}. Synced.`);
     route();
   }
+
+  // A tab left open goes stale while other devices make progress: re-pull when it becomes visible again and periodically.
+  // Don't re-render mid-typing; the next page load or push will pick the merged progress up.
+  async function refresh() {
+    if (!user || document.hidden) return;
+    if (await pullState() && !location.hash.startsWith("#/type/")) route();
+  }
+  document.addEventListener("visibilitychange", refresh);
+  addEventListener("focus", refresh);
+  setInterval(refresh, 30000);
 
   $btn.hidden = false;
   $btn.onclick = async () => {

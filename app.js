@@ -183,11 +183,20 @@ async function renderBook(id) {
 
 // ---------- typing console ----------
 const EQUIV = { "‘": "'", "’": "'", "ʼ": "'", "“": '"', "”": '"', "—": "-", "–": "-", "‐": "-", "…": ".", "\n": " ", " ": " " };
+// Typographic punctuation and spaces can't be typed on most keyboards, so these always map to their ASCII look-alike.
+const PUNCT = { "\u202f": " ", "\u2009": " " };
+// French letters/guillemets: mapped to the nearest English-keyboard key unless "exact characters" is on.
+const LATIN = { "«": "<", "»": ">", "œ": "o", "Œ": "O", "æ": "a", "Æ": "A" };
+const SETTINGS_DEFAULT = { exact: false, size: 17 };
+const settings = () => ({ ...SETTINGS_DEFAULT, ...store.get("settings", {}) });
+const applySize = () => document.documentElement.style.setProperty("--text-size", settings().size + "px");
+applySize();
 function matches(expected, typed) {
   if (expected === typed) return true;
   if (expected === "\n" && typed === "Enter") return true;
-  const e = EQUIV[expected] ?? expected.normalize("NFD").replace(/[̀-ͯ]/g, "");
-  return e === typed;
+  if (EQUIV[expected] !== undefined || PUNCT[expected] !== undefined) return (EQUIV[expected] ?? PUNCT[expected]) === typed;
+  if (settings().exact) return expected.normalize("NFC") === typed.normalize("NFC");
+  return (LATIN[expected] ?? expected.normalize("NFD").replace(/[\u0300-\u036f]/g, "")) === typed;
 }
 
 async function renderConsole(id, ch, pg) {
@@ -200,9 +209,18 @@ async function renderConsole(id, ch, pg) {
   const text = paras.join("\n");
   const chars = [...text];
   $crumbs.innerHTML = `<a href="#/">Books</a> / <a href="#/book/${encodeURIComponent(id)}">Chapters</a> / <b>Typing</b>`;
+  const prevDisabled = ch === 0 && pg === 0 ? "disabled" : "";
+  const nextDisabled = ch + 1 >= book.chapters.length && pg + 1 >= chapter.pages.length ? "disabled" : "";
   $stats.innerHTML = `<span>${esc(chapter.title)}</span><span>Page ${pg + 1}/${chapter.pages.length}</span><span id="wpm">— WPM</span><span id="acc">— ACC</span>
-    <button class="icon" id="restart" title="Restart page" aria-label="Restart page">↻</button>`;
-  $app.innerHTML = `<div class="console" tabindex="0"><p class="hint">Start typing. Enter or space at paragraph ends. Backspace fixes mistakes.</p><div class="text"></div><div id="after"></div></div>`;
+    <button class="icon" id="prev" title="Previous page" aria-label="Previous page" ${prevDisabled}>‹</button>
+    <button class="icon" id="skip" title="Next page" aria-label="Next page" ${nextDisabled}>›</button>
+    <button class="icon" id="restart" title="Restart page" aria-label="Restart page">↻</button>
+    <button class="icon" id="gear" title="Settings" aria-label="Settings" aria-expanded="false">⚙</button>`;
+  $app.innerHTML = `<div class="console" tabindex="0"><p class="hint">Start typing. Enter or space at paragraph ends. Backspace fixes mistakes.</p><div class="text"></div><div id="after"></div></div>
+    <div class="settings" id="settings" hidden>
+      <label class="check"><input type="checkbox" id="exact"> Require exact French characters<small>Off: é types as e, « as &lt;, ç as c, etc.</small></label>
+      <label>Text size <output id="sizeout"></output><input type="range" id="size" min="12" max="40" step="1"></label>
+    </div>`;
   const $text = $app.querySelector(".text");
   // one span per char, paragraphs as <p>; "\n" spans are invisible paragraph-end markers
   let html = "<p>";
@@ -210,6 +228,11 @@ async function renderConsole(id, ch, pg) {
   $text.innerHTML = html + "</p>";
   const spans = [...$text.querySelectorAll("span")];
 
+  // Active time only: a gap of more than IDLE ms between keystrokes counts for nothing (timer pauses, and the idle wait is dropped).
+  const IDLE = 5000;
+  let active = 0, last = 0;
+  const activeMs = () => active + (last && Date.now() - last <= IDLE ? Date.now() - last : 0);
+  const touch = () => { const now = Date.now(); if (last && now - last <= IDLE) active += now - last; last = now; };
   let pos = 0, started = 0, keystrokes = 0, errors = 0, finished = false;
   const typed = []; // what the user typed at each position
   const setCursor = () => {
@@ -220,11 +243,16 @@ async function renderConsole(id, ch, pg) {
   const correctCount = () => typed.reduce((n, t, i) => n + (matches(chars[i], t) ? 1 : 0), 0);
   const tick = () => {
     if (!started) return;
-    const mins = (Date.now() - started) / 60000;
+    const mins = activeMs() / 60000;
     document.getElementById("wpm").textContent = `${Math.round(correctCount() / 5 / Math.max(mins, 1 / 60))} WPM`;
     document.getElementById("acc").textContent = `${Math.round((100 * (keystrokes - errors)) / keystrokes)}% ACC`;
   };
   const timer = setInterval(tick, 1000);
+  const base = `#/type/${encodeURIComponent(id)}/`;
+  const prevHash = pg > 0 ? `${base}${ch}/${pg - 1}` : ch > 0 ? `${base}${ch - 1}/${book.chapters[ch - 1].pages.length - 1}` : null;
+  const nextPage = pg + 1 < chapter.pages.length ? `${base}${ch}/${pg + 1}` : ch + 1 < book.chapters.length ? `${base}${ch + 1}/0` : null;
+  document.getElementById("prev").onclick = () => prevHash && (location.hash = prevHash);
+  document.getElementById("skip").onclick = () => nextPage && (location.hash = nextPage);
 
   function finish() {
     finished = true; tick();
@@ -240,10 +268,12 @@ async function renderConsole(id, ch, pg) {
   }
 
   function onKey(e) {
+    if (e.target.closest?.("#settings")) return; // keys inside the settings menu aren't typing
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (finished) { if (e.key === "Enter") location.hash = onKey.next; return; }
     if (e.key === "Backspace") {
       e.preventDefault();
+      touch();
       if (!pos) return;
       pos--; typed.pop(); spans[pos].className = "";
       spans[pos].textContent = chars[pos] === "\n" ? " " : chars[pos];
@@ -252,6 +282,7 @@ async function renderConsole(id, ch, pg) {
     if (e.key.length !== 1 && e.key !== "Enter") return;
     e.preventDefault();
     started ||= Date.now();
+    touch();
     keystrokes++;
     const ok = matches(chars[pos], e.key);
     if (!ok) errors++;
@@ -264,8 +295,18 @@ async function renderConsole(id, ch, pg) {
     setCursor();
   }
   document.getElementById("restart").onclick = () => route();
+  const $set = document.getElementById("settings"), $gear = document.getElementById("gear");
+  const $exact = document.getElementById("exact"), $size = document.getElementById("size");
+  const cur = settings();
+  $exact.checked = cur.exact; $size.value = cur.size; document.getElementById("sizeout").textContent = cur.size + "px";
+  $gear.onclick = (e) => { e.stopPropagation(); $set.hidden = !$set.hidden; $gear.setAttribute("aria-expanded", !$set.hidden); $gear.blur(); };
+  $exact.onchange = () => { store.set("settings", { ...settings(), exact: $exact.checked }); $exact.blur(); };
+  $size.oninput = () => { store.set("settings", { ...settings(), size: +$size.value }); document.getElementById("sizeout").textContent = $size.value + "px"; applySize(); };
+  $size.onchange = () => $size.blur(); // give keys back to the typing console
+  const closeSet = (e) => { if (!$set.hidden && !$set.contains(e.target)) { $set.hidden = true; $gear.setAttribute("aria-expanded", "false"); } };
+  document.addEventListener("click", closeSet);
   addEventListener("keydown", onKey);
-  cleanup = () => { removeEventListener("keydown", onKey); clearInterval(timer); };
+  cleanup = () => { removeEventListener("keydown", onKey); document.removeEventListener("click", closeSet); clearInterval(timer); };
   setCursor();
   window.scrollTo(0, 0);
 }
