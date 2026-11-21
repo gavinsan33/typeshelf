@@ -16,8 +16,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 #crumbs { display: flex; gap: 6px; color: var(--muted); font-size: 16px; }
 #crumbs a:hover { color: var(--text); }
 #crumbs b { color: var(--text); }
-.stats { margin-left: auto; display: flex; gap: 32px; font-weight: 700; font-size: 16px; }
-.icon { font-size: 22px; padding: 4px 8px; }
+.stats { margin-left: auto; display: flex; align-items: center; gap: 28px; font-weight: 700; font-size: 16px; white-space: nowrap; }
+.stats .tools { display: flex; align-items: center; }
+.icon { display: inline-grid; place-items: center; width: 34px; height: 34px; padding: 0; font-size: 22px; line-height: 1; }
+.icon svg { display: block; }
+.account { white-space: nowrap; }
 
 .wrap { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
 .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-bottom: 40px; }
@@ -80,7 +83,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 @media (max-width: 760px) {
   .hero { grid-template-columns: 1fr; }
   .bar { padding: 0 16px; gap: 12px; }
-  .stats { gap: 14px; font-size: 13px; }
+  .bar { height: auto; flex-wrap: wrap; padding-top: 6px; padding-bottom: 6px; row-gap: 2px; }
+  .brand { font-size: 20px; margin-right: auto; }
+  .stats { order: 3; width: 100%; margin-left: 0; gap: 12px; font-size: 13px; justify-content: space-between; }
+  .settings { top: 96px; }
   #crumbs { display: none; }
   .wrap, .book, .console { padding-left: 16px; padding-right: 16px; }
   .grid { grid-template-columns: 1fr; }
@@ -106,3 +112,4 @@ dialog .add { padding: 8px 18px; background: var(--accent); color: #111; font-we
 .settings .check small { grid-column: 2; font-weight: 400; color: var(--muted); }
 .settings output { font-weight: 400; color: var(--muted); }
 .settings input[type=range] { width: 100%; accent-color: var(--accent); }
+.ime { position: fixed; left: -9999px; top: 0; width: 1px; height: 1px; opacity: 0; }

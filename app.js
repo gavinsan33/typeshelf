@@ -211,12 +211,13 @@ async function renderConsole(id, ch, pg) {
   $crumbs.innerHTML = `<a href="#/">Books</a> / <a href="#/book/${encodeURIComponent(id)}">Chapters</a> / <b>Typing</b>`;
   const prevDisabled = ch === 0 && pg === 0 ? "disabled" : "";
   const nextDisabled = ch + 1 >= book.chapters.length && pg + 1 >= chapter.pages.length ? "disabled" : "";
-  $stats.innerHTML = `<span>${esc(chapter.title)}</span><span>Page ${pg + 1}/${chapter.pages.length}</span><span id="wpm">— WPM</span><span id="acc">— ACC</span>
-    <button class="icon" id="prev" title="Previous page" aria-label="Previous page" ${prevDisabled}>‹</button>
-    <button class="icon" id="skip" title="Next page" aria-label="Next page" ${nextDisabled}>›</button>
-    <button class="icon" id="restart" title="Restart page" aria-label="Restart page">↻</button>
-    <button class="icon" id="gear" title="Settings" aria-label="Settings" aria-expanded="false">⚙</button>`;
-  $app.innerHTML = `<div class="console" tabindex="0"><p class="hint">Start typing. Enter or space at paragraph ends. Backspace fixes mistakes.</p><div class="text"></div><div id="after"></div></div>
+  $stats.innerHTML = `<span class="chtitle">${esc(chapter.title)}</span><span>Page ${pg + 1}/${chapter.pages.length}</span><span id="wpm">— WPM</span><span id="acc">— ACC</span>
+    <span class="tools"><button class="icon" id="prev" title="Previous page" aria-label="Previous page" ${prevDisabled}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="icon" id="skip" title="Next page" aria-label="Next page" ${nextDisabled}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+    <button class="icon" id="restart" title="Restart page" aria-label="Restart page"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg></button>
+    <button class="icon" id="gear" title="Settings" aria-label="Settings" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h0a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5h0a1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v0a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span>`;
+  $app.innerHTML = `<div class="console" tabindex="0"><p class="hint">Start typing. Enter or space at paragraph ends. Backspace fixes mistakes.</p><div class="text"></div><div id="after"></div>
+      <textarea id="ime" class="ime" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Typing input"></textarea></div>
     <div class="settings" id="settings" hidden>
       <label class="check"><input type="checkbox" id="exact"> Require exact French characters<small>Off: é types as e, « as &lt;, ç as c, etc.</small></label>
       <label>Text size <output id="sizeout"></output><input type="range" id="size" min="12" max="40" step="1"></label>
@@ -269,7 +270,8 @@ async function renderConsole(id, ch, pg) {
 
   function onKey(e) {
     if (e.target.closest?.("#settings")) return; // keys inside the settings menu aren't typing
-    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    // Alt is allowed when it yields a character (AltGr / compose layouts); Alt+arrow etc. have multi-char keys and fall through below.
+    if (e.ctrlKey || e.metaKey || (e.altKey && e.key.length !== 1)) return;
     if (finished) { if (e.key === "Enter") location.hash = onKey.next; return; }
     if (e.key === "Backspace") {
       e.preventDefault();
@@ -279,30 +281,44 @@ async function renderConsole(id, ch, pg) {
       spans[pos].textContent = chars[pos] === "\n" ? " " : chars[pos];
       return setCursor();
     }
-    if (e.key.length !== 1 && e.key !== "Enter") return;
+    if (e.key.length !== 1 && e.key !== "Enter") return; // Dead/Process/Compose: leave to the input method; the text arrives via #ime
     e.preventDefault();
+    typeKey(e.key);
+  }
+  function typeKey(key) {
+    if (finished) return;
     started ||= Date.now();
     touch();
     keystrokes++;
-    const ok = matches(chars[pos], e.key);
+    const ok = matches(chars[pos], key);
     if (!ok) errors++;
-    typed.push(e.key);
+    typed.push(key);
     const s = spans[pos];
     s.className = ok ? "ok" : chars[pos] === "\n" || chars[pos] === " " ? "bad space" : "bad";
-    if (!ok && e.key !== "Enter" && chars[pos] !== "\n") s.textContent = e.key; // show what was typed, like the original
+    if (!ok && key !== "Enter" && chars[pos] !== "\n") s.textContent = key; // show what was typed, like the original
     pos++;
     if (pos >= chars.length) { $text.querySelector(".cur")?.classList.remove("cur"); return finish(); }
     setCursor();
   }
+  // Compose / dead-key / IME input: those keystrokes don't reach keydown as a character, so catch the result in a hidden field.
+  const $ime = document.getElementById("ime");
+  let composing = false;
+  const flushIme = () => { const v = $ime.value; $ime.value = ""; for (const ch of v) typeKey(ch === "\n" ? "Enter" : ch); };
+  $ime.addEventListener("compositionstart", () => (composing = true));
+  $ime.addEventListener("compositionend", () => { composing = false; setTimeout(flushIme, 0); });
+  $ime.addEventListener("input", (e) => { if (!composing && !e.isComposing) flushIme(); });
+  const focusIme = () => $ime.focus({ preventScroll: true });
+  $app.querySelector(".console").addEventListener("click", focusIme);
+  focusIme();
   document.getElementById("restart").onclick = () => route();
   const $set = document.getElementById("settings"), $gear = document.getElementById("gear");
   const $exact = document.getElementById("exact"), $size = document.getElementById("size");
   const cur = settings();
   $exact.checked = cur.exact; $size.value = cur.size; document.getElementById("sizeout").textContent = cur.size + "px";
-  $gear.onclick = (e) => { e.stopPropagation(); $set.hidden = !$set.hidden; $gear.setAttribute("aria-expanded", !$set.hidden); $gear.blur(); };
-  $exact.onchange = () => { store.set("settings", { ...settings(), exact: $exact.checked }); $exact.blur(); };
+  $gear.onclick = (e) => { e.stopPropagation(); $set.hidden = !$set.hidden; $gear.setAttribute("aria-expanded", !$set.hidden); $gear.blur(); focusIme(); };
+  $exact.onchange = () => { store.set("settings", { ...settings(), exact: $exact.checked }); focusIme(); };
   $size.oninput = () => { store.set("settings", { ...settings(), size: +$size.value }); document.getElementById("sizeout").textContent = $size.value + "px"; applySize(); };
-  $size.onchange = () => $size.blur(); // give keys back to the typing console
+  $size.onchange = () => focusIme(); // give keys back to the typing console
   const closeSet = (e) => { if (!$set.hidden && !$set.contains(e.target)) { $set.hidden = true; $gear.setAttribute("aria-expanded", "false"); } };
   document.addEventListener("click", closeSet);
   addEventListener("keydown", onKey);
