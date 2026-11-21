@@ -41,6 +41,7 @@ async function parseEpub(buf) {
   const hrefs = {};
   for (const it of opf.getElementsByTagName("item")) hrefs[it.getAttribute("id")] = it.getAttribute("href");
 
+  const cover = await coverImage(files, opf, resolve);
   const chapters = [];
   for (const ref of opf.getElementsByTagName("itemref")) {
     const href = hrefs[ref.getAttribute("idref")];
@@ -56,5 +57,27 @@ async function parseEpub(buf) {
     chapters.push({ title: (heading || `Section ${chapters.length + 1}`).slice(0, 80), paras });
   }
   if (!chapters.length) throw new Error("No readable text found in EPUB");
-  return { title: meta("dc:title") || "Untitled", author: meta("dc:creator") || "Unknown", chapters };
+  return { title: meta("dc:title") || "Untitled", author: meta("dc:creator") || "Unknown", chapters, cover };
+}
+
+// The cover is declared in the OPF: EPUB3 marks the manifest item properties="cover-image";
+// EPUB2 uses <meta name="cover" content="item-id">. Returns a small JPEG data URL (or null) so it stays cheap to store and sync.
+async function coverImage(files, opf, resolve) {
+  try {
+    const items = [...opf.getElementsByTagName("item")];
+    const isImg = (i) => /^image\//.test(i.getAttribute("media-type") || "");
+    const metaId = [...opf.getElementsByTagName("meta")].find((m) => m.getAttribute("name") === "cover")?.getAttribute("content");
+    const item = items.find((i) => (i.getAttribute("properties") || "").split(/\s+/).includes("cover-image"))
+      || items.find((i) => metaId && i.getAttribute("id") === metaId && isImg(i))
+      || items.find((i) => isImg(i) && /cover/i.test(i.getAttribute("id") + " " + i.getAttribute("href")));
+    if (!item) return null;
+    const path = resolve(item.getAttribute("href"));
+    const f = files[path] ?? files[decodeURIComponent(path)];
+    if (!f) return null;
+    const bmp = await createImageBitmap(new Blob([await f()], { type: item.getAttribute("media-type") || "image/jpeg" }));
+    const w = Math.min(200, bmp.width), h = Math.round((bmp.height * w) / bmp.width);
+    const c = document.createElement("canvas"); c.width = w; c.height = h;
+    const g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, w, h); g.drawImage(bmp, 0, 0, w, h);
+    return c.toDataURL("image/jpeg", 0.8);
+  } catch { return null; } // unsupported format (e.g. SVG cover): fall back to the placeholder
 }

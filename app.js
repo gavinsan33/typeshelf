@@ -57,7 +57,8 @@ function paginate(paras) {
 function bookStats(id, sum) {
   const done = progress()[id] || {};
   const vals = Object.values(done);
-  const avg = (k) => (vals.length ? Math.round(vals.reduce((a, v) => a + v[k], 0) / vals.length) : null);
+  const typedVals = vals.filter((v) => v.wpm != null); // pages skipped with "set progress" have no score
+  const avg = (k) => (typedVals.length ? Math.round(typedVals.reduce((a, v) => a + v[k], 0) / typedVals.length) : null);
   const chaptersDone = sum.chapters.filter((c, i) => [...Array(c.pages).keys()].every((p) => done[`${i}/${p}`])).length;
   return { pagesDone: vals.length, chaptersDone, wpm: avg("wpm"), acc: avg("acc"), done };
 }
@@ -84,7 +85,7 @@ document.getElementById("theme").onclick = () => {
 function card(b) {
   const s = bookStats(b.id, b);
   const pct = b.pages ? Math.round((100 * s.pagesDone) / b.pages) : 0;
-  const cover = b.id.startsWith("c-") ? `<div class="nocover"></div>` : `<img src="covers/${b.id}.jpg" alt="${esc(b.title)} cover" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'nocover'}))">`;
+  const cover = b.id.startsWith("c-") ? (b.cover ? `<img src="${esc(b.cover)}" alt="${esc(b.title)} cover" loading="lazy">` : `<div class="nocover"></div>`) : `<img src="covers/${b.id}.jpg" alt="${esc(b.title)} cover" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'nocover'}))">`;
   return `<a class="card" href="#/book/${encodeURIComponent(b.id)}">${cover}
     <div class="meta"><h3>${esc(b.title)}</h3><h4>${esc(b.author)}</h4>
     <span class="pages">${b.pages} Pages</span>${pct ? `<div class="bar-mini"><i style="width:${pct}%"></i></div>` : ""}</div></a>`;
@@ -124,7 +125,7 @@ async function renderHome() {
         try {
           const b = await parseEpub(await file.arrayBuffer());
           await saveBook({ id: "c-" + Date.now() + Math.random().toString(36).slice(2, 6), title: b.title, author: b.author,
-            chapters: b.chapters.map((c) => ({ title: c.title, pages: paginate(c.paras) })) });
+            chapters: b.chapters.map((c) => ({ title: c.title, pages: paginate(c.paras) })), cover: b.cover || undefined });
         } catch (err) { msg.textContent = `${file.name}: ${err.message}`; return; }
       }
       renderHome();
@@ -163,7 +164,7 @@ async function renderBook(id) {
   const b = summary({ ...full, id });
   const s = bookStats(id, b);
   $crumbs.innerHTML = `<a href="#/">Books</a> / <b>Chapters</b>`;
-  const cover = id.startsWith("c-") ? "" : `<img src="covers/${id}.jpg" alt="${esc(b.title)} cover" onerror="this.remove()">`;
+  const cover = id.startsWith("c-") ? (b.cover ? `<img src="${esc(b.cover)}" alt="${esc(b.title)} cover">` : "") : `<img src="covers/${id}.jpg" alt="${esc(b.title)} cover" onerror="this.remove()">`;
   $app.innerHTML = `<div class="book">
     <div class="bookhead">${cover}<div class="info">
       <h1>${esc(b.title)}</h1><h2>${esc(b.author)}</h2>
@@ -226,6 +227,7 @@ async function renderConsole(id, ch, pg) {
   $app.innerHTML = `<div class="console" tabindex="0"><p class="hint">Start typing. Enter or space at paragraph ends. Backspace fixes mistakes.</p><div class="text"></div><div id="after"></div>
       <textarea id="ime" class="ime" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Typing input"></textarea></div>
     <div class="settings" id="settings" hidden>
+      <div class="skipto"><button id="skipto" class="add">Set progress to current page</button><small>Marks every earlier page in this book as done, without scores.</small></div>
       <label class="check"><input type="checkbox" id="gender"> Color French nouns by gender<small><span class="gm">Blue</span> masculine, <span class="gf">pink</span> feminine. Words that vary by sense are left plain.</small></label>
       <label class="check"><input type="checkbox" id="exact"> Require exact French characters<small>Off: é types as e, « as &lt;, ç as c, etc.</small></label>
       <label>Text size <output id="sizeout"></output><input type="range" id="size" min="12" max="40" step="1"></label>
@@ -342,6 +344,17 @@ async function renderConsole(id, ch, pg) {
   const cur = settings();
   $exact.checked = cur.exact; $size.value = cur.size; document.getElementById("sizeout").textContent = cur.size + "px";
   $gear.onclick = (e) => { e.stopPropagation(); $set.hidden = !$set.hidden; $gear.setAttribute("aria-expanded", !$set.hidden); $gear.blur(); focusIme(); };
+  document.getElementById("skipto").onclick = (e) => {
+    const p = progress(), done = (p[id] ||= {});
+    let n = 0;
+    outer: for (let c = 0; c < book.chapters.length; c++) for (let q = 0; q < book.chapters[c].pages.length; q++) {
+      if (c === ch && q === pg) break outer;
+      if (!done[`${c}/${q}`]) { done[`${c}/${q}`] = { skipped: true }; n++; }
+    }
+    store.set("progress", p); sync.pushState();
+    e.target.textContent = n ? `Marked ${n} earlier page${n === 1 ? "" : "s"} done` : "Earlier pages already done";
+    focusIme();
+  };
   const $gender = document.getElementById("gender");
   $gender.checked = cur.gender;
   $gender.onchange = () => { store.set("settings", { ...settings(), gender: $gender.checked }); paintGender(); focusIme(); };

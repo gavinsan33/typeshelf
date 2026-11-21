@@ -11,6 +11,8 @@ const sync = (() => {
   let user = null;
   const $btn = document.getElementById("account");
   const $dlg = document.getElementById("signin");
+  let coverCol = true; // flips to false if supabase/schema.sql's cover column hasn't been added yet
+  const missingCover = (e) => /cover/i.test(e.message || "");
   const say = (t) => { $btn.title = t; };
   const fail = (what, error) => { console.error(what, error); say(`Sync error: ${error.message}`); };
 
@@ -44,7 +46,9 @@ const sync = (() => {
   }
   async function pushBook(b) {
     if (!user) return;
-    const { error } = await sb.from("user_books").upsert({ user_id: user.id, id: b.id, title: b.title, author: b.author, chapters: b.chapters });
+    const row = { user_id: user.id, id: b.id, title: b.title, author: b.author, chapters: b.chapters };
+    let { error } = await sb.from("user_books").upsert(coverCol ? { ...row, cover: b.cover ?? null } : row);
+    if (error && coverCol && missingCover(error)) { coverCol = false; ({ error } = await sb.from("user_books").upsert(row)); } // table predates the cover column
     if (error) return fail("push book", error);
     store.set("synced", [...new Set([...store.get("synced", []), b.id])]);
   }
@@ -76,7 +80,8 @@ const sync = (() => {
     }
     const missing = [...remote].filter((id) => !local.some((b) => b.id === id));
     if (missing.length) {
-      const { data, error } = await sb.from("user_books").select("id, title, author, chapters").in("id", missing);
+      let { data, error } = await sb.from("user_books").select(coverCol ? "id, title, author, chapters, cover" : "id, title, author, chapters").in("id", missing);
+      if (error && coverCol && missingCover(error)) { coverCol = false; ({ data, error } = await sb.from("user_books").select("id, title, author, chapters").in("id", missing)); }
       if (error) return fail("pull books", error);
       for (const b of data) await tx("readwrite", (s) => s.put(b));
     }
