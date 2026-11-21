@@ -5,3 +5,7 @@ Personal typing-practice site modeled on typelit.io: type through public-domain 
 - Add or change books in `tools/build_books.py`, then run `python3 tools/build_books.py` (downloads texts and covers from Project Gutenberg into `books/` and `covers/`).
 - Local preview: `python3 -m http.server`.
 - Custom tab: upload EPUBs (DRM-free) or paste text. Books are stored in IndexedDB, progress in localStorage, both only in this browser.
+
+## French noun gender coloring
+
+`fr-gender.json` maps French nouns to a gender for the optional gender tint in the typing settings. Gender data is derived from Wiktionary (via [kaikki.org](https://kaikki.org), CC BY-SA) and filtered with [Lexique 3.83](http://www.lexique.org) (CC BY-SA 4.0). Rebuild it with `tools/build_gender.py`.

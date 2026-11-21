@@ -187,10 +187,17 @@ const EQUIV = { "‘": "'", "’": "'", "ʼ": "'", "“": '"', "”": '"', "—"
 const PUNCT = { "\u202f": " ", "\u2009": " " };
 // French letters/guillemets: mapped to the nearest English-keyboard key unless "exact characters" is on.
 const LATIN = { "«": "<", "»": ">", "œ": "o", "Œ": "O", "æ": "a", "Æ": "A" };
-const SETTINGS_DEFAULT = { exact: false, size: 17 };
+const SETTINGS_DEFAULT = { exact: false, size: 17, gender: false };
 const settings = () => ({ ...SETTINGS_DEFAULT, ...store.get("settings", {}) });
 const applySize = () => document.documentElement.style.setProperty("--text-size", settings().size + "px");
 applySize();
+// French noun genders (fr-gender.json: {m: "word word ...", f: "..."}), fetched only when the setting is first used.
+let genderMap;
+const loadGender = () => (genderMap ??= fetch("fr-gender.json").then((r) => r.json()).then((d) => {
+  const m = new Map();
+  for (const g of ["m", "f"]) for (const w of d[g].split(" ")) m.set(w, g);
+  return m;
+}).catch(() => (genderMap = undefined)));
 function matches(expected, typed) {
   if (expected === typed) return true;
   if (expected === "\n" && typed === "Enter") return true;
@@ -219,6 +226,7 @@ async function renderConsole(id, ch, pg) {
   $app.innerHTML = `<div class="console" tabindex="0"><p class="hint">Start typing. Enter or space at paragraph ends. Backspace fixes mistakes.</p><div class="text"></div><div id="after"></div>
       <textarea id="ime" class="ime" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Typing input"></textarea></div>
     <div class="settings" id="settings" hidden>
+      <label class="check"><input type="checkbox" id="gender"> Color French nouns by gender<small><span class="gm">Blue</span> masculine, <span class="gf">pink</span> feminine. Words that vary by sense are left plain.</small></label>
       <label class="check"><input type="checkbox" id="exact"> Require exact French characters<small>Off: é types as e, « as &lt;, ç as c, etc.</small></label>
       <label>Text size <output id="sizeout"></output><input type="range" id="size" min="12" max="40" step="1"></label>
     </div>`;
@@ -228,6 +236,23 @@ async function renderConsole(id, ch, pg) {
   chars.forEach((c, i) => { html += c === "\n" ? `<span data-i="${i}"> </span></p><p>` : `<span data-i="${i}">${esc(c)}</span>`; });
   $text.innerHTML = html + "</p>";
   const spans = [...$text.querySelectorAll("span")];
+
+  // Tint nouns by gender via data-g on each letter span (survives the className resets while typing).
+  const paintGender = async () => {
+    for (const s of spans) delete s.dataset.g;
+    if (!settings().gender) return;
+    const map = await loadGender();
+    if (!map || !settings().gender || !document.contains($text)) return;
+    const isL = (c) => /\p{L}/u.test(c);
+    for (let i = 0; i < chars.length; ) {
+      if (!isL(chars[i])) { i++; continue; }
+      let j = i; while (j < chars.length && isL(chars[j])) j++;
+      const g = map.get(chars.slice(i, j).join("").toLowerCase().normalize("NFC"));
+      if (g) for (let k = i; k < j; k++) spans[k].dataset.g = g;
+      i = j;
+    }
+  };
+  paintGender();
 
   // Active time only: a gap of more than IDLE ms between keystrokes counts for nothing (timer pauses, and the idle wait is dropped).
   const IDLE = 5000;
@@ -308,7 +333,8 @@ async function renderConsole(id, ch, pg) {
   $ime.addEventListener("compositionend", () => { composing = false; setTimeout(flushIme, 0); });
   $ime.addEventListener("input", (e) => { if (!composing && !e.isComposing) flushIme(); });
   const focusIme = () => $ime.focus({ preventScroll: true });
-  $app.querySelector(".console").addEventListener("click", focusIme);
+  // Don't refocus while text is selected: focusing the hidden field would clear the selection (copy / translate).
+  $app.querySelector(".console").addEventListener("click", () => { if (getSelection().isCollapsed) focusIme(); });
   focusIme();
   document.getElementById("restart").onclick = () => route();
   const $set = document.getElementById("settings"), $gear = document.getElementById("gear");
@@ -316,6 +342,9 @@ async function renderConsole(id, ch, pg) {
   const cur = settings();
   $exact.checked = cur.exact; $size.value = cur.size; document.getElementById("sizeout").textContent = cur.size + "px";
   $gear.onclick = (e) => { e.stopPropagation(); $set.hidden = !$set.hidden; $gear.setAttribute("aria-expanded", !$set.hidden); $gear.blur(); focusIme(); };
+  const $gender = document.getElementById("gender");
+  $gender.checked = cur.gender;
+  $gender.onchange = () => { store.set("settings", { ...settings(), gender: $gender.checked }); paintGender(); focusIme(); };
   $exact.onchange = () => { store.set("settings", { ...settings(), exact: $exact.checked }); focusIme(); };
   $size.oninput = () => { store.set("settings", { ...settings(), size: +$size.value }); document.getElementById("sizeout").textContent = $size.value + "px"; applySize(); };
   $size.onchange = () => focusIme(); // give keys back to the typing console
